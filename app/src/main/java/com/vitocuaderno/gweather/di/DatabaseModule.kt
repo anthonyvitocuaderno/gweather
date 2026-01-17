@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.vitocuaderno.gweather.data.datasource.local.AppDatabase
 import com.vitocuaderno.gweather.data.datasource.local.UserDao
+import com.vitocuaderno.gweather.data.datasource.local.WeatherDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,4 +30,8 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideUserDao(appDatabase: AppDatabase): UserDao = appDatabase.userDao()
+
+    @Provides
+    @Singleton
+    fun provideWeatherDao(appDatabase: AppDatabase): WeatherDao = appDatabase.weatherDao()
 }

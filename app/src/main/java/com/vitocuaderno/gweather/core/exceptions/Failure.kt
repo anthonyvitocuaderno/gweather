@@ -13,6 +13,12 @@ sealed class Failure {
 
     object PasswordsDoNotMatch : Failure()
 
+    object LocationPermissionNotGranted : Failure()
+
+    object LocationServiceNotEnabled : Failure()
+
+    object LocationNotFound : Failure()
+
     /** * Extend this class for feature specific failures.* */
     abstract class FeatureFailure : Failure()
 }

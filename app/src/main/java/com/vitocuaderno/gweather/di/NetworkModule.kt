@@ -1,5 +1,6 @@
 package com.vitocuaderno.gweather.di
 
+import com.vitocuaderno.gweather.core.Constants
 import com.vitocuaderno.gweather.data.datasource.remote.ApiClient
 import dagger.Module
 import dagger.Provides
@@ -14,8 +15,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "https://api.gweather.com/"
-
     @Provides
     @Singleton
     fun provideHttpClient(): OkHttpClient {
@@ -32,7 +31,7 @@ object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit
             .Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

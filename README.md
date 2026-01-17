@@ -10,9 +10,9 @@
 
 ## Screenshots
 
-| Register                       | Login                    |
-|--------------------------------|--------------------------|
-| ![Register](./ss_register.jpg) | ![Login](./ss_login.jpg) |
+| Register                       | Login                      |
+|--------------------------------|----------------------------|
+| ![Register](./ss_register.jpg) | ![Login](./ss_sign_in.jpg) |
 
 | Current Weather                      | History                      |
 |--------------------------------------|------------------------------|
@@ -45,5 +45,5 @@ The login and registration flow is currently local for testing purposes only.
 1.  The app requests location permissions from the user.
 2.  The app checks if the location service is enabled and prompts the user to enable it if it's not.
 3.  Once the location is available, the app uses the `Geocoder` to get the city and country.
-4.  The app then uses the city and country to fetch the current weather from the OpenWeather API.
+4.  The app will then fetch the current weather from the OpenWeather API.
 5.  The weather data is then saved to the local database and displayed on the screen.

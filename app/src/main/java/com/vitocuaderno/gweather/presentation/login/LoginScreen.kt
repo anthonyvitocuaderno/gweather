@@ -1,6 +1,7 @@
 package com.vitocuaderno.gweather.presentation.login
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -14,15 +15,16 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.autofill.ContentType
-import androidx.compose.ui.semantics.contentType
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.vitocuaderno.gweather.presentation.navigation.NavigationEvent
 import com.vitocuaderno.gweather.presentation.navigation.Navigator
+import com.vitocuaderno.gweather.presentation.navigation.Screens
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +58,7 @@ fun LoginScreen(
             onEmailChanged = viewModel::onEmailChanged,
             onPasswordChanged = viewModel::onPasswordChanged,
             onLogin = viewModel::login,
-            onBack = { navigator.navController.popBackStack() },
+            onSignUp = { navigator.navigate(Screens.Register) },
         )
     }
 }
@@ -68,14 +70,14 @@ fun LoginScreenContent(
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onLogin: () -> Unit,
-    onBack: () -> Unit,
+    onSignUp: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -92,7 +94,6 @@ fun LoginScreenContent(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     isError = uiState.error != null,
                     singleLine = true,
-                    modifier = Modifier.semantics { contentType = ContentType.EmailAddress },
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 TextField(
@@ -103,7 +104,6 @@ fun LoginScreenContent(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     isError = uiState.error != null,
                     singleLine = true,
-                    modifier = Modifier.semantics { contentType = ContentType.Password },
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -124,6 +124,19 @@ fun LoginScreenContent(
                 TextButton(onClick = { /* TODO */ }) {
                     Text("Forgot your password?")
                 }
+                Spacer(modifier = Modifier.height(16.dp))
+
+                ClickableText(
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onSurface)) {
+                            append("Don't have an account yet? ")
+                        }
+                        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                            append("Sign up")
+                        }
+                    },
+                    onClick = { onSignUp() },
+                )
             }
 
             if (uiState.isSuccess) {

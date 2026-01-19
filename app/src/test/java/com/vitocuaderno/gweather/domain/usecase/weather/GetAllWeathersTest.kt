@@ -1,19 +1,16 @@
 package com.vitocuaderno.gweather.domain.usecase.weather
 
-import androidx.paging.PagingData
+import com.google.common.truth.Truth.assertThat
 import com.vitocuaderno.gweather.domain.FakeAuthRepository
 import com.vitocuaderno.gweather.domain.TestStubs
-import com.vitocuaderno.gweather.domain.model.Weather
 import com.vitocuaderno.gweather.domain.repository.FakeWeatherRepository
 import com.vitocuaderno.gweather.domain.usecase.user.GetUserUseCase
-import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
 class GetAllWeathersTest {
-
     private lateinit var getAllWeathers: GetAllWeathers
     private lateinit var weatherRepository: FakeWeatherRepository
     private lateinit var authRepository: FakeAuthRepository
@@ -28,16 +25,17 @@ class GetAllWeathersTest {
     }
 
     @Test
-    fun `User logged in, returns weather data`() = runTest {
-        // Given a logged in user
-        authRepository.register(TestStubs.testUser, TestStubs.testPassword)
-        authRepository.login(TestStubs.testEmail, TestStubs.testPassword).first()
-        weatherRepository.saveWeather(TestStubs.testWeather)
+    fun `User logged in, returns weather data`() =
+        runTest {
+            // Given a logged in user
+            authRepository.register(TestStubs.testUser, TestStubs.testPassword)
+            authRepository.login(TestStubs.testEmail, TestStubs.testPassword).first()
+            weatherRepository.saveWeather(TestStubs.testWeather)
 
-        // When
-        val result = getAllWeathers.run().first()
+            // When
+            val result = getAllWeathers.run().first()
 
-        // Then
-        assertThat(result).isNotNull()
-    }
+            // Then
+            assertThat(result).isNotNull()
+        }
 }
